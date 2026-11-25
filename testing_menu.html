@@ -1,0 +1,834 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Browse Items | RBU Campus Needs Exchange</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background-color: #f7f6f3;
+            color: #252525;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #ffffff;
+            min-height: 100vh;
+            border-right: 1px solid #e5e5e5;
+            padding: 24px 18px;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: bold;
+            color: #222;
+            text-decoration: none;
+        }
+
+        .sidebar .nav-link {
+            color: #444;
+            padding: 13px 15px;
+            border-radius: 7px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: #e8f1ff;
+            color: #3979d6;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 12px;
+        }
+
+        .quick-actions {
+            font-size: 12px;
+            color: #888;
+            letter-spacing: 1px;
+            margin: 25px 0 12px;
+        }
+
+        /* Main area */
+        .main-content {
+            padding: 28px;
+        }
+
+        .search-box {
+            min-width: 180px;
+        }
+
+        /* Product cards */
+        .product-card {
+            border: 1px solid #e4e2de;
+            border-radius: 9px;
+            overflow: hidden;
+            height: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            background-color: #e9e9e9;
+        }
+
+        .product-card .card-body {
+            padding: 18px;
+        }
+
+        .product-title {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: #777;
+            min-height: 42px;
+        }
+
+        .product-price {
+            font-size: 23px;
+            margin: 12px 0;
+        }
+
+        .condition {
+            display: inline-block;
+            border: 1px solid #8aafe9;
+            color: #477bc4;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 13px;
+        }
+
+        .location {
+            font-size: 14px;
+            color: #777;
+            margin-top: 14px;
+        }
+
+        .seller {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .seller-icon {
+            background: #dedede;
+            color: #777;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .favorite-btn {
+            border: none;
+            background: transparent;
+            color: #888;
+            font-size: 20px;
+        }
+
+        .favorite-btn.saved {
+            color: #dc3545;
+        }
+
+        .filter-btn {
+            color: #477bc4;
+            border-color: #9db8e5;
+            white-space: nowrap;
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background-color: #202124;
+            color: #f5f5f5;
+        }
+
+        .dark-mode .sidebar,
+        .dark-mode .product-card,
+        .dark-mode .form-control,
+        .dark-mode .form-select {
+            background-color: #2d2f33;
+            color: #f5f5f5;
+            border-color: #484a50;
+        }
+
+        .dark-mode .brand,
+        .dark-mode .sidebar .nav-link {
+            color: #f5f5f5;
+        }
+
+        .dark-mode .sidebar .nav-link.active {
+            background-color: #354a67;
+        }
+
+        .dark-mode .product-description,
+        .dark-mode .location,
+        .dark-mode .seller {
+            color: #c4c4c4;
+        }
+
+        .dark-mode .product-image {
+            background-color: #3b3b3b;
+        }
+
+        @media (max-width: 767px) {
+            .sidebar {
+                min-height: auto;
+                padding: 16px;
+            }
+
+            .sidebar .nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 4px;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+
+            .product-image {
+                height: 210px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <aside class="col-lg-2 col-md-3 sidebar">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <a href="browse.html" class="brand">
+                    <i class="bi bi-shop"></i> Campus Exchange
+                </a>
+
+                <button class="btn btn-light rounded-circle"
+                        id="themeToggle"
+                        aria-label="Toggle dark mode">
+                    <i class="bi bi-moon"></i>
+                </button>
+            </div>
+
+            <nav class="nav flex-column">
+
+                <a href="browse.html" class="nav-link">
+                    <i class="bi bi-house"></i> Home
+                </a>
+
+                <a href="browse.html" class="nav-link active">
+                    <i class="bi bi-bag"></i> Browse
+                </a>
+
+                <a href="#items" class="nav-link">
+                    <i class="bi bi-arrow-left-right"></i> Items Swap
+                </a>
+
+                <a href="#contact" class="nav-link">
+                    <i class="bi bi-chat"></i> Messages
+                </a>
+
+                <a href="#contact" class="nav-link">
+                    <i class="bi bi-bell"></i> Notifications
+                </a>
+
+                <a href="#items" class="nav-link">
+                    <i class="bi bi-heart"></i> Favorites
+                </a>
+
+            </nav>
+
+            <hr>
+
+            <p class="quick-actions">QUICK ACTIONS</p>
+
+            <nav class="nav flex-column">
+
+                <a href="#items" class="nav-link">
+                    <i class="bi bi-box"></i> My Listings
+                </a>
+
+                <a href="#contact" class="nav-link">
+                    <i class="bi bi-person"></i> Profile
+                </a>
+
+                <a href="index.html" class="nav-link text-danger">
+                    <i class="bi bi-box-arrow-right"></i> Log Out
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="col-lg-10 col-md-9 main-content">
+
+            <!-- SEARCH, FILTER AND SORT -->
+            <div class="row g-3 align-items-center mb-4">
+
+                <div class="col-lg-7 col-md-12">
+                    <div class="input-group search-box">
+                        <span class="input-group-text bg-white">
+                            <i class="bi bi-search"></i>
+                        </span>
+
+                        <input type="search"
+                               class="form-control"
+                               id="searchInput"
+                               placeholder="Search listings...">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-sm-6">
+                    <select class="form-select" id="categoryFilter"
+                            aria-label="Filter by category">
+                        <option value="all">All Categories</option>
+                        <option value="Books">Books</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Hostel">Hostel</option>
+                        <option value="Accessories">Accessories</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <select class="form-select" id="sortSelect"
+                            aria-label="Sort listings">
+                        <option value="newest">Newest First</option>
+                        <option value="low">Price: Low to High</option>
+                        <option value="high">Price: High to Low</option>
+                    </select>
+                </div>
+
+            </div>
+
+
+            <!-- PAGE HEADING -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-bold">Discover Items</h2>
+                    <p class="text-secondary mb-0">
+                        Buy, sell, borrow, or exchange within your campus.
+                    </p>
+                </div>
+
+                <a href="#contact" class="btn btn-primary">
+                    <i class="bi bi-plus-lg"></i> List an Item
+                </a>
+            </div>
+
+
+            <!-- PRODUCT CARDS -->
+            <div class="row g-4" id="items">
+
+
+                <!-- ITEM 1 -->
+                <div class="col-xl-3 col-lg-4 col-sm-6 product-item"
+                     data-name="Calculus Textbook"
+                     data-category="Books"
+                     data-price="50"
+                     data-date="8">
+
+                    <div class="card product-card">
+                        <img class="product-image"
+                             src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80"
+                             alt="Textbook">
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="product-title">Calculus Textbook</h5>
+                                <button class="favorite-btn" aria-label="Save Calculus Textbook">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+
+                            <p class="product-description">
+                                Calculus textbook for engineering students.
+                            </p>
+
+                            <p class="product-price">₹50.00</p>
+                            <span class="condition">Good</span>
+
+                            <p class="location">
+                                <i class="bi bi-geo-alt"></i> Student Center
+                            </p>
+
+                            <div class="seller">
+                                <span class="seller-icon">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                Student Seller
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ITEM 2 -->
+                <div class="col-xl-3 col-lg-4 col-sm-6 product-item"
+                     data-name="Compact Microwave Oven"
+                     data-category="Hostel"
+                     data-price="600"
+                     data-date="7">
+
+                    <div class="card product-card">
+                        <img class="product-image"
+                             src="https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?auto=format&fit=crop&w=600&q=80"
+                             alt="Microwave oven">
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="product-title">Microwave Oven</h5>
+                                <button class="favorite-btn" aria-label="Save Microwave Oven">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+
+                            <p class="product-description">
+                                Compact microwave, ideal for hostel use.
+                            </p>
+
+                            <p class="product-price">₹600.00</p>
+                            <span class="condition">Good</span>
+
+                            <p class="location">
+                                <i class="bi bi-geo-alt"></i> Engineering Building
+                            </p>
+
+                            <div class="seller">
+                                <span class="seller-icon">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                Student Seller
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ITEM 3 -->
+                <div class="col-xl-3 col-lg-4 col-sm-6 product-item"
+                     data-name="Basketball"
+                     data-category="Sports"
+                     data-price="250"
+                     data-date="6">
+
+                    <div class="card product-card">
+                        <img class="product-image"
+                             src="https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=600&q=80"
+                             alt="Basketball">
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="product-title">Basketball</h5>
+                                <button class="favorite-btn" aria-label="Save Basketball">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+
+                            <p class="product-description">
+                                Basketball for indoor and outdoor games.
+                            </p>
+
+                            <p class="product-price">₹250.00</p>
+                            <span class="condition">Fair</span>
+
+                            <p class="location">
+                                <i class="bi bi-geo-alt"></i> Student Union
+                            </p>
+
+                            <div class="seller">
+                                <span class="seller-icon">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                Student Seller
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ITEM 4 -->
+                <div class="col-xl-3 col-lg-4 col-sm-6 product-item"
+                     data-name="Gaming Laptop"
+                     data-category="Electronics"
+                     data-price="12000"
+                     data-date="5">
+
+                    <div class="card product-card">
+                        <img class="product-image"
+                             src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80"
+                             alt="Laptop">
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="product-title">Gaming Laptop</h5>
+                                <button class="favorite-btn" aria-label="Save Gaming Laptop">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+
+                            <p class="product-description">
+                                Laptop suitable for coding and projects.
+                            </p>
+
+                            <p class="product-price">₹12,000.00</p>
+                            <span class="condition">Like New</span>
+
+                            <p class="location">
+                                <i class="bi bi-geo-alt"></i> Physics Building
+                            </p>
+
+                            <div class="seller">
+                                <span class="seller-icon">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                Student Seller
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ITEM 5 -->
+                <div class="col-xl-3 col-lg-4 col-sm-6 product-item"
+                     data-name="Wireless Headphones"
+                     data-category="Electronics"
+                     data-price="800"
+                     data-date="4">
+
+                    <div class="card product-card">
+                        <img class="product-image"
+                             src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"
+                             alt="Headphones">
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="product-title">Wireless Headphones</h5>
+                                <button class="favorite-btn" aria-label="Save Wireless Headphones">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+
+                            <p class="product-description">
+                                Comfortable headphones for daily use.
+                            </p>
+
+                            <p class="product-price">₹800.00</p>
+                            <span class="condition">Good</span>
+
+                            <p class="location">
+                                <i class="bi bi-geo-alt"></i> Library
+                            </p>
+
+                            <div class="seller">
+                                <span class="seller-icon">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                Student Seller
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ITEM 6 -->
+                <div class="col-xl-3 col-lg-4 col-sm-6 product-item"
+                     data-name="Camera Lens"
+                     data-category="Electronics"
+                     data-price="3500"
+                     data-date="3">
+
+                    <div class="card product-card">
+                        <img class="product-image"
+                             src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80"
+                             alt="Camera">
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="product-title">Camera</h5>
+                                <button class="favorite-btn" aria-label="Save Camera">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+
+                            <p class="product-description">
+                                Camera for photography and college events.
+                            </p>
+
+                            <p class="product-price">₹3,500.00</p>
+                            <span class="condition">Good</span>
+
+                            <p class="location">
+                                <i class="bi bi-geo-alt"></i> Media Lab
+                            </p>
+
+                            <div class="seller">
+                                <span class="seller-icon">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                Student Seller
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ITEM 7 -->
+                <div class="col-xl-3 col-lg-4 col-sm-6 product-item"
+                     data-name="Drawing Tablet"
+                     data-category="Electronics"
+                     data-price="2200"
+                     data-date="2">
+
+                    <div class="card product-card">
+                        <img class="product-image"
+                             src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80"
+                             alt="Drawing equipment">
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="product-title">Drawing Tablet</h5>
+                                <button class="favorite-btn" aria-label="Save Drawing Tablet">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+
+                            <p class="product-description">
+                                Useful for digital art and design projects.
+                            </p>
+
+                            <p class="product-price">₹2,200.00</p>
+                            <span class="condition">Good</span>
+
+                            <p class="location">
+                                <i class="bi bi-geo-alt"></i> Design Studio
+                            </p>
+
+                            <div class="seller">
+                                <span class="seller-icon">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                Student Seller
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ITEM 8 -->
+                <div class="col-xl-3 col-lg-4 col-sm-6 product-item"
+                     data-name="Electric Kettle"
+                     data-category="Hostel"
+                     data-price="400"
+                     data-date="1">
+
+                    <div class="card product-card">
+                        <img class="product-image"
+                             src="https://images.unsplash.com/photo-1608354580875-30bd4168b351?auto=format&fit=crop&w=600&q=80"
+                             alt="Electric kettle">
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="product-title">Electric Kettle</h5>
+                                <button class="favorite-btn" aria-label="Save Electric Kettle">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+
+                            <p class="product-description">
+                                Handy kettle for your hostel room.
+                            </p>
+
+                            <p class="product-price">₹400.00</p>
+                            <span class="condition">Like New</span>
+
+                            <p class="location">
+                                <i class="bi bi-geo-alt"></i> Hostel Block
+                            </p>
+
+                            <div class="seller">
+                                <span class="seller-icon">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                                Student Seller
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <p id="noResults" class="text-center text-secondary mt-5"
+               style="display: none;">
+                No items found. Try another search.
+            </p>
+
+            <footer class="text-center text-secondary mt-5" id="contact">
+                <hr>
+                <p>RBU Campus Needs Exchange &copy; 2026</p>
+                <p>Connecting students, one exchange at a time.</p>
+            </footer>
+
+        </main>
+
+    </div>
+</div>
+
+
+<!-- JAVASCRIPT FOR SEARCH, FILTER, SORT AND FAVORITES -->
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const sortSelect = document.getElementById("sortSelect");
+    const itemsContainer = document.getElementById("items");
+    const noResults = document.getElementById("noResults");
+
+    function updateItems() {
+        const searchText = searchInput.value.toLowerCase().trim();
+        const selectedCategory = categoryFilter.value;
+
+        const cards = Array.from(
+            itemsContainer.querySelectorAll(".product-item")
+        );
+
+        cards.forEach(card => {
+            const name = card.dataset.name.toLowerCase();
+            const category = card.dataset.category;
+
+            const matchesSearch = name.includes(searchText);
+            const matchesCategory =
+                selectedCategory === "all" ||
+                category === selectedCategory;
+
+            card.style.display =
+                matchesSearch && matchesCategory ? "" : "none";
+        });
+
+        const visibleCards = cards.filter(
+            card => card.style.display !== "none"
+        );
+
+        const sortValue = sortSelect.value;
+
+        visibleCards.sort((a, b) => {
+            if (sortValue === "low") {
+                return Number(a.dataset.price) -
+                       Number(b.dataset.price);
+            }
+
+            if (sortValue === "high") {
+                return Number(b.dataset.price) -
+                       Number(a.dataset.price);
+            }
+
+            return Number(b.dataset.date) -
+                   Number(a.dataset.date);
+        });
+
+        visibleCards.forEach(card => itemsContainer.appendChild(card));
+
+        noResults.style.display =
+            visibleCards.length === 0 ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", updateItems);
+    categoryFilter.addEventListener("change", updateItems);
+    sortSelect.addEventListener("change", updateItems);
+
+
+    // Save favorites in the browser
+    let favorites = JSON.parse(
+        localStorage.getItem("campusFavorites") || "[]"
+    );
+
+    function updateFavoriteButtons() {
+        document.querySelectorAll(".product-item").forEach(card => {
+            const name = card.dataset.name;
+            const button = card.querySelector(".favorite-btn");
+            const icon = button.querySelector("i");
+
+            const isSaved = favorites.includes(name);
+
+            button.classList.toggle("saved", isSaved);
+            icon.className = isSaved ? "bi bi-heart-fill" : "bi bi-heart";
+            button.setAttribute(
+                "aria-pressed",
+                String(isSaved)
+            );
+        });
+    }
+
+    document.querySelectorAll(".product-item").forEach(card => {
+        const button = card.querySelector(".favorite-btn");
+
+        button.addEventListener("click", () => {
+            const name = card.dataset.name;
+
+            if (favorites.includes(name)) {
+                favorites = favorites.filter(item => item !== name);
+            } else {
+                favorites.push(name);
+            }
+
+            localStorage.setItem(
+                "campusFavorites",
+                JSON.stringify(favorites)
+            );
+
+            updateFavoriteButtons();
+        });
+    });
+
+    updateFavoriteButtons();
+
+
+    // Dark mode toggle
+    const themeToggle = document.getElementById("themeToggle");
+
+    themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+
+        const icon = themeToggle.querySelector("i");
+
+        icon.className = document.body.classList.contains("dark-mode")
+            ? "bi bi-sun"
+            : "bi bi-moon";
+    });
+</script>
+
+</body>
+</html>

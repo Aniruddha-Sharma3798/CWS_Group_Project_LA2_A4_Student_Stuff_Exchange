@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>List an Item - RBU Star Stream</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-lg-2 col-md-3 bg-white border-end min-vh-100 p-3">
+
+                <h4 class="fw-bold mb-4">
+                    <i class="bi bi-shop"></i> RBU Star Stream
+                </h4>
+
+                <nav class="nav flex-column">
+
+                    <a href="browse.html"
+                       class="nav-link text-dark mb-2">
+                        <i class="bi bi-bag me-2"></i> Marketplace
+                    </a>
+
+                    <a href="#" class="nav-link text-dark mb-2">
+                        <i class="bi bi-chat me-2"></i> Messages
+                    </a>
+
+                    <a href="reputation.html"
+                       class="nav-link text-dark mb-2">
+                        <i class="bi bi-star me-2"></i> Reputation
+                    </a>
+
+                </nav>
+
+                <hr>
+
+                <nav class="nav flex-column">
+
+                    <a href="#" class="nav-link text-dark mb-2">
+                        <i class="bi bi-box me-2"></i> My Listings
+                    </a>
+
+                    <a href="#" class="nav-link text-dark mb-2">
+                        <i class="bi bi-person me-2"></i> My Profile
+                    </a>
+
+                    <a href="index.html"
+                       class="nav-link text-danger mb-2">
+                        <i class="bi bi-box-arrow-right me-2"></i> Log Out
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <div class="col-lg-10 col-md-9 p-3 p-lg-4">
+
+                <div class="mb-4">
+                    <h2 class="fw-bold">List an Item</h2>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4">
+
+                    <div class="card-body p-4">
+
+                        <form action="#" method="post">
+
+                            <h4 class="fw-bold mb-3">
+                                Basic Information
+                            </h4>
+
+                            <div class="row g-3">
+
+                                <div class="col-12">
+                                    <label for="itemname" class="form-label">
+                                        Item Name
+                                    </label>
+
+                                    <input type="text" class="form-control" id="itemname" name="itemname" placeholder="example:- Kurta" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="category" class="form-label">
+                                        Category
+                                    </label>
+
+                                    <select class="form-select" id="category" name="category" required>
+
+                                        <option value="">Select category</option>
+                                        <option value="books">Books</option>
+                                        <option value="stationery">Stationery</option>
+                                        <option value="tech">Tech</option>
+                                        <option value="sports">Sports</option>
+                                        <option value="miscellaneous">Miscellaneous</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="description" class="form-label">
+                                        Item Description
+                                    </label>
+
+                                    <textarea class="form-control" id="description" name="description" rows="1" placeholder="Describe your item" required></textarea>
+                                </div>
+
+                            </div>
+
+
+                            <hr class="my-4">
+
+
+                            <h4 class="fw-bold mb-3">
+                                Listing Details
+                            </h4>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+                                    <label for="listingtype" class="form-label">
+                                        Listing Type
+                                    </label>
+
+                                    <select class="form-select" id="listingtype" name="listingtype" required>
+
+                                        <option value="">Choose listing type</option>
+                                        <option value="buy">To Buy</option>
+                                        <option value="borrow">To Borrow</option>
+                                        <option value="swap">To Swap</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="price" class="form-label">
+                                        Price
+                                    </label>
+                                    <input type="text" class="form-control" id="itemname" name="itemname" placeholder="Enter your price tag" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="swapItem" class="form-label">
+                                        Item You Want in Exchange (Optional)
+                                    </label>
+
+                                    <input type="text" class="form-control" id="swapitem" name="swapitem" placeholder="example:- Water Kettle">
+                                </div>
+
+                            </div>
+
+
+                            <hr class="my-4">
+
+
+                            <h4 class="fw-bold mb-3">
+                                Other Details
+                            </h4>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+                                    <label for="sellername" class="form-label">
+                                        Your Full Name
+                                    </label>
+
+                                    <input type="text" class="form-control" id="sellername" name="sellername" placeholder="Enter your full name" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="sellerEmail" class="form-label">
+                                        College Email Address
+                                    </label>
+
+                                    <input type="email"
+                                           class="form-control"
+                                           id="sellerEmail"
+                                           name="sellerEmail"
+                                           placeholder="Enter your college email"
+                                           required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="sellerPhone" class="form-label">
+                                        Mobile Number
+                                    </label>
+
+                                    <input type="tel" class="form-control" id="phone name="phone" placeholder="Enter contact number" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="meetingLocation" class="form-label">
+                                        Preferred Meeting Location
+                                    </label>
+
+                                    <select class="form-select" id="meetinglocation" name="meetinglocation" required>
+
+                                        <option value="">Choose location</option>
+                                        <option value="library">Library</option>
+                                        <option value="canteen">Canteen</option>
+                                        <option value="hostel">Boys' Hostel</option>
+
+                                    </select>
+                                </div>
+
+                                <hr class="my-4">
+
+
+                                    <h4 class="fw-bold mb-3">
+                                        Upload Item Image
+                                    </h4>
+
+                                    <div class="mb-3">
+
+                                        <input type="file" class="form-control" id="itemimage" name="itemimage"  accept="image/*" required>
+
+                                    </div>
+
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-3 mt-4">
+
+                                <button type="submit" class="btn btn-primary px-4">
+                                    Upload
+                                </button>
+
+                                <button type="reset" class="btn btn-light border px-4">
+                                    Cancel
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
